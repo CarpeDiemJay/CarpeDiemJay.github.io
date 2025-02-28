@@ -201,7 +201,6 @@
       color: var(--primary-color);
       text-align: center;
     }
-    /* Highlight only the time in blue, revert "Jamaat" to neutral */
     .jamat-label {
       font-size: 13px;
       color: var(--secondary-text);
@@ -400,7 +399,7 @@
     document.getElementById('current-date').textContent = currentDate;
 
     /*******************************************************
-     * 2. Ramadan Day Calculation
+     * 2. Ramadan Day Calculation (Optional)
      *******************************************************/
     const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
     const today = new Date();
@@ -416,58 +415,229 @@
     }
 
     /*******************************************************
-     * 3. Prayer Data (Using Erik Flowers' Weather Icons)
+     * 3. CSV Data (8 Days)
+     *    Hardcoded array of objects for demonstration
      *******************************************************/
-    const prayers = [
-      { 
-        name: "Fajr", 
-        startTime: "05:13 AM", 
-        jamatTime: "05:33 AM", 
-        label: null,
-        iconClass: "wi-horizon"
+    const prayerData = [
+      {
+        date: "28/02/25",
+        fajr: "5:13 AM",
+        fajrJamaat: "5:33 AM",
+        sunrise: "6:55 AM",
+        dhuhr: "12:24 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "3:54 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:47 PM",
+        maghribJamaat: "5:47 PM",
+        isha: "7:16 PM",
+        ishaJamaat: "8:00 PM"
       },
-      { 
-        name: "Sunrise",  
-        startTime: "06:33 AM", 
-        jamatTime: null,
-        label: null,
-        iconClass: "wi-sunrise"
+      {
+        date: "01/03/25",
+        fajr: "5:13 AM",
+        fajrJamaat: "5:33 AM",
+        sunrise: "6:53 AM",
+        dhuhr: "12:24 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "3:54 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:47 PM",
+        maghribJamaat: "5:47 PM",
+        isha: "7:16 PM",
+        ishaJamaat: "8:00 PM"
       },
-      { 
-        name: "Dhuhr",    
-        startTime: "12:24 PM", 
-        jamatTime: "01:15 PM", 
-        label: null,
-        iconClass: "wi-day-sunny"
+      {
+        date: "02/03/25",
+        fajr: "5:11 AM",
+        fajrJamaat: "5:31 AM",
+        sunrise: "6:51 AM",
+        dhuhr: "12:24 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "3:55 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:48 PM",
+        maghribJamaat: "5:48 PM",
+        isha: "7:17 PM",
+        ishaJamaat: "8:00 PM"
       },
-      { 
-        name: "Asr",      
-        startTime: "03:54 PM", 
-        jamatTime: "04:30 PM", 
-        label: null,
-        iconClass: "wi-day-sunny-overcast"
+      {
+        date: "03/03/25",
+        fajr: "5:09 AM",
+        fajrJamaat: "5:29 AM",
+        sunrise: "6:49 AM",
+        dhuhr: "12:24 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:00 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:50 PM",
+        maghribJamaat: "5:50 PM",
+        isha: "7:18 PM",
+        ishaJamaat: "8:00 PM"
       },
-      { 
-        name: "Maghrib",  
-        startTime: "05:47 PM", 
-        jamatTime: "05:47 PM", 
-        label: null,
-        iconClass: "wi-sunset"
+      {
+        date: "04/03/25",
+        fajr: "5:06 AM",
+        fajrJamaat: "5:26 AM",
+        sunrise: "6:46 AM",
+        dhuhr: "12:24 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:01 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:52 PM",
+        maghribJamaat: "5:52 PM",
+        isha: "7:20 PM",
+        ishaJamaat: "8:00 PM"
       },
-      { 
-        name: "Isha | Taraweeh",     
-        startTime: "07:16 PM", 
-        jamatTime: "08:00 PM", 
-        label: null,
-        iconClass: "wi-night-clear"
+      {
+        date: "05/03/25",
+        fajr: "5:04 AM",
+        fajrJamaat: "5:24 AM",
+        sunrise: "6:44 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:03 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:54 PM",
+        maghribJamaat: "5:54 PM",
+        isha: "7:21 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "06/03/25",
+        fajr: "5:02 AM",
+        fajrJamaat: "5:22 AM",
+        sunrise: "6:42 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:04 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:56 PM",
+        maghribJamaat: "5:56 PM",
+        isha: "7:23 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "07/03/25",
+        fajr: "5:00 AM",
+        fajrJamaat: "5:20 AM",
+        sunrise: "6:40 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:06 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:57 PM",
+        maghribJamaat: "5:57 PM",
+        isha: "7:23 PM",
+        ishaJamaat: "8:00 PM"
       },
     ];
+
+    /*******************************************************
+     * 3b. Find Today's Row in CSV
+     *******************************************************/
+    // Helper to get dd/mm/yy string from today's date
+    function getTodayDDMMYY() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yy = String(d.getFullYear()).slice(-2); // last 2 digits
+      return `${dd}/${mm}/${yy}`;
+    }
+
+    const todayStr = getTodayDDMMYY(); // e.g. "28/02/25"
+    const todayRow = prayerData.find(row => row.date === todayStr);
+
+    /*******************************************************
+     * 3c. Build "prayers" array from CSV row (if found)
+     *******************************************************/
+    let prayers = [];
+    if (todayRow) {
+      prayers = [
+        {
+          name: "Fajr",
+          startTime: todayRow.fajr,
+          jamatTime: todayRow.fajrJamaat,
+          iconClass: "wi-horizon"
+        },
+        {
+          name: "Sunrise",
+          startTime: todayRow.sunrise,
+          jamatTime: null,
+          iconClass: "wi-sunrise"
+        },
+        {
+          name: "Dhuhr",
+          startTime: todayRow.dhuhr,
+          jamatTime: todayRow.dhuhrJamaat,
+          iconClass: "wi-day-sunny"
+        },
+        {
+          name: "Asr",
+          startTime: todayRow.asr,
+          jamatTime: todayRow.asrJamaat,
+          iconClass: "wi-day-sunny-overcast"
+        },
+        {
+          name: "Maghrib",
+          startTime: todayRow.maghrib,
+          jamatTime: todayRow.maghribJamaat,
+          iconClass: "wi-sunset"
+        },
+        {
+          name: "Isha | Taraweeh",
+          startTime: todayRow.isha,
+          jamatTime: todayRow.ishaJamaat,
+          iconClass: "wi-night-clear"
+        }
+      ];
+    } else {
+      // If no match, you could leave prayers blank or provide a fallback
+      prayers = [
+        {
+          name: "Fajr",
+          startTime: "--",
+          jamatTime: "--",
+          iconClass: "wi-horizon"
+        },
+        {
+          name: "Sunrise",
+          startTime: "--",
+          jamatTime: null,
+          iconClass: "wi-sunrise"
+        },
+        {
+          name: "Dhuhr",
+          startTime: "--",
+          jamatTime: "--",
+          iconClass: "wi-day-sunny"
+        },
+        {
+          name: "Asr",
+          startTime: "--",
+          jamatTime: "--",
+          iconClass: "wi-day-sunny-overcast"
+        },
+        {
+          name: "Maghrib",
+          startTime: "--",
+          jamatTime: "--",
+          iconClass: "wi-sunset"
+        },
+        {
+          name: "Isha | Taraweeh",
+          startTime: "--",
+          jamatTime: "--",
+          iconClass: "wi-night-clear"
+        }
+      ];
+    }
 
     /*******************************************************
      * 4. Convert Time to Minutes for "Now"/"Next" Logic
      *******************************************************/
     function timeToMinutes(timeStr) {
-      if (!timeStr) return null;
+      if (!timeStr || timeStr === "--") return null;
       const [time, meridian] = timeStr.split(" ");
       let [hh, mm] = time.split(":").map(Number);
       if (meridian === "PM" && hh < 12) hh += 12;
@@ -521,7 +691,11 @@
       card.innerHTML = `
         <i class="prayer-icon ${p.iconClass}" aria-hidden="true"></i>
         <div class="prayer-name">${p.name}</div>
-        ${p.label ? `<div class="prayer-label">${p.label}</div>` : ""}
+        ${
+          p.label
+            ? `<div class="prayer-label">${p.label}</div>`
+            : ""
+        }
         <div class="prayer-time">${p.startTime || ""}</div>
         ${
           p.jamatTime
