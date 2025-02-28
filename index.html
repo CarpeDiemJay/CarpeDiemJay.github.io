@@ -201,18 +201,21 @@
       color: var(--primary-color);
       text-align: center;
     }
-    .prayer-time-secondary {
-      font-size: 15px;
-      color: var(--secondary-text);
-      margin-top: 2px;
-      text-align: center;
-    }
+    /* Highlight only the time in blue, revert "Jamaat" to neutral */
     .jamat-label {
       font-size: 13px;
       color: var(--secondary-text);
       margin-top: -2px;
       margin-bottom: 2px;
       text-align: center;
+      font-weight: 500;
+    }
+    .prayer-time-secondary {
+      font-size: 15px;
+      color: var(--primary-color);
+      margin-top: 2px;
+      text-align: center;
+      font-weight: 600;
     }
 
     /* Community Section */
@@ -223,6 +226,20 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
       margin-bottom: 20px;
+      position: relative;
+    }
+    /* "Masjid Announcement" badge */
+    .announcement-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background-color: var(--accent-color);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
     .announcement-date {
       font-size: 13px;
@@ -351,9 +368,12 @@
     <!-- Community Section -->
     <section id="community-section">
       <div class="community-card">
+        <!-- "Masjid Announcement" badge -->
+        <div class="announcement-badge">Masjid Announcement</div>
+        
         <div class="announcement-date">Feb 28, 2025</div>
         <div class="announcement-text">
-          Mosque Announcement: Taraweeh prayers begin tonight at 8PM - ladies and mens facilities available.
+          Taraweeh prayers begin tonight at 8PM - ladies and mens facilities available.
         </div>
       </div>
     </section>
@@ -362,7 +382,6 @@
   <!-- Bottom Nav (Icons + Text) -->
   <div class="bottom-nav">
     <button class="nav-pill" id="nav-timetable" aria-label="Timetable">
-      <!-- Using Weather Icons for nav as well -->
       <i class="wi wi-day-sunny" aria-hidden="true"></i>
       <span>Timetable</span>
     </button>
@@ -381,10 +400,8 @@
     document.getElementById('current-date').textContent = currentDate;
 
     /*******************************************************
-     * 2. Ramadan Day Calculation (Example)
+     * 2. Ramadan Day Calculation
      *******************************************************/
-    // If you want to make "Day 1" exactly match today's date, set ramadanStart to today's date.
-    // Note: Months are 0-indexed in JS, so 1 = February
     const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
     const today = new Date();
     const dayDiff = Math.floor((today - ramadanStart) / (1000 * 60 * 60 * 24)) + 1;
@@ -407,7 +424,7 @@
         startTime: "05:13 AM", 
         jamatTime: "05:33 AM", 
         label: null,
-        iconClass: "wi-horizon" // e.g. pre-dawn
+        iconClass: "wi-horizon"
       },
       { 
         name: "Sunrise",  
