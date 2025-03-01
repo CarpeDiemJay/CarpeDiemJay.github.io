@@ -77,9 +77,8 @@
       max-width: 800px;
       width: 100%;
       margin: 0 auto;
-      /* Slightly less top padding, a bit more bottom padding to accommodate nav */
       padding: 12px 20px;
-      padding-bottom: 70px; 
+      padding-bottom: 70px; /* Enough bottom padding so content isn't hidden behind nav pills */
       flex: 1;
     }
 
@@ -87,14 +86,14 @@
     header {
       text-align: center;
       margin-bottom: 8px;
-      padding: 0; /* Removing extra padding so title is lifted up */
+      padding: 0; /* Minimizing extra spacing so title is lifted up */
       position: relative;
     }
     header h1 {
       font-size: var(--title-font-size);
       font-weight: var(--title-weight);
       letter-spacing: -0.5px;
-      margin: 0; /* No extra margin below the title */
+      margin: 0;
       background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -318,20 +317,20 @@
       font-size: 15px;
     }
 
-    /* Bottom Nav (Pill-based) */
+    /* Bottom Nav (Pill-based, now invisible background) */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: var(--card-bg);
-      /* Use safe-area inset for iOS devices with home indicator */
+      /* Make bar invisible */
+      background-color: transparent;
+      box-shadow: none;
+      /* iOS safe-area inset to avoid home indicator overlap */
       padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
-      box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      /* More top padding for a less "squeezed" look */
       padding-top: 14px;
       z-index: 999;
     }
@@ -451,7 +450,7 @@
     </section>
   </div>
 
-  <!-- Bottom Nav -->
+  <!-- Bottom Nav (Invisible bar, visible pills) -->
   <div class="bottom-nav">
     <button class="nav-pill" id="nav-timetable" aria-label="Timetable">
       <i class="wi wi-day-sunny" aria-hidden="true"></i>
@@ -611,7 +610,6 @@
           { name: "Isha | Taraweeh", startTime: selectedRow.isha, jamatTime: selectedRow.ishaJamaat, iconClass: "wi-night-clear" }
         ];
       } else {
-        // Fallback if date not found
         prayers = [
           { name: "Fajr", startTime: "--", jamatTime: "--", iconClass: "wi-horizon" },
           { name: "Sunrise", startTime: "--", jamatTime: null, iconClass: "wi-sunrise" },
