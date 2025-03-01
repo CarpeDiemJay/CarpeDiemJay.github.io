@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/CarpeDiemJay/CarpeDiemJay.github.io/blob/main/images/185X180.png?raw=true">
   <title>Jalalabad Mosque</title>
-
   <!-- Weather Icons by Erik Flowers (v2.0.9) -->
   <link
     rel="stylesheet"
@@ -13,13 +13,15 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-
+  <!-- Font Awesome for nicer arrow icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" href="https://github.com/CarpeDiemJay/CarpeDiemJay.github.io/blob/f84bae6385c380ca92ca665088dd4b49e2897e21/images/jalalabad_logo_v1.png?raw=true" type="image/png">
   <style>
     :root {
       /* Core Colors */
-      --primary-color: #007AFF;  /* iOS Blue */
+      --primary-color: #007AFF;
       --accent-color: #5E5CE6;   
-      --bg-color: #F5F5F7;      /* iOS system background (light) */
+      --bg-color: #F5F5F7;
       --card-bg: #FFFFFF;
       --text-color: #1C1C1E;
       --secondary-text: #6E6E73;
@@ -30,7 +32,8 @@
       --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 
       /* Typography */
-      --title-font-size: 30px;
+      --title-font-size: 34px;
+      --title-weight: 700;
       --time-font-size: 26px;
       --label-font-size: 14px;
       --nav-font-size: 13px;
@@ -58,41 +61,54 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      margin: 0;
     }
 
     .container {
       max-width: 800px;
       width: 100%;
       margin: 0 auto;
-      padding: 20px;
-      padding-bottom: 90px; /* extra space for bottom nav */
+      /* Decreased top padding from 20px to 10px to pull content up */
+      padding: 10px;
+      /* Also reduced bottom padding from 60px to 50px for a tighter fit */
+      padding-bottom: 50px;
       flex: 1;
     }
 
     /* Header */
     header {
       text-align: center;
-      margin-bottom: 8px;
-      padding: 20px 0 10px;
+      /* Reduced margin-bottom and adjusted padding to reduce blank space */
+      margin-bottom: 10px;
+      padding: 10px 0 8px;
+      position: relative;
     }
     header h1 {
       font-size: var(--title-font-size);
-      font-weight: 700;
+      font-weight: var(--title-weight);
       letter-spacing: -0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 0;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     /* Date & Ramadan Info */
     .date-section {
       text-align: center;
-      margin: 10px 0 20px;
+      /* Reduced margins so the date is closer to the header */
+      margin: 5px 0 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -100,7 +116,27 @@
     .date-display {
       font-weight: 500;
       font-size: 16px;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .date-nav-btn {
+      background-color: var(--primary-color);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .date-nav-btn:hover {
+      background-color: var(--accent-color);
     }
     .ramadan-counter {
       background-color: var(--accent-color);
@@ -109,7 +145,7 @@
       border-radius: 15px;
       font-size: 14px;
       font-weight: 600;
-      margin-top: 10px;
+      margin-top: 8px;
       display: inline-flex;
       align-items: center;
     }
@@ -130,14 +166,14 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* Slightly reduced from 20px */
     }
 
     /* Prayer Card */
     .prayer-card {
       background-color: var(--card-bg);
       border-radius: var(--border-radius);
-      padding: 24px;
+      padding: 20px; /* Reduced from 24px */
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
       display: flex;
@@ -146,13 +182,11 @@
       position: relative;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: default;
-      
-      /* Fade in animation prep */
       opacity: 0;
       transform: translateY(10px);
     }
     .prayer-card.fade-in {
-      animation: fadeInUp 0.4s forwards ease;
+      animation: fadeInUp 0.8s forwards ease;
     }
     @keyframes fadeInUp {
       0% {
@@ -171,23 +205,23 @@
 
     /* Prayer Icon */
     .prayer-icon {
-      font-size: 45px;
-      margin-bottom: 15px;
+      font-size: 42px; /* Slightly smaller than 45px */
+      margin-bottom: 12px; /* Slightly reduced margin */
       color: var(--primary-color);
       flex-shrink: 0;
     }
 
-    /* Prayer Name, Times, etc. */
+    /* Prayer Details */
     .prayer-name {
       font-size: 18px;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px; /* Reduced */
       text-align: center;
     }
     .prayer-label {
       font-size: var(--label-font-size);
       color: var(--secondary-text);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-align: center;
       background-color: rgba(0, 122, 255, 0.1);
       border-radius: 12px;
@@ -218,16 +252,22 @@
     }
 
     /* Community Section */
+    .community-fade {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .community-fade.fade-in {
+      animation: fadeInUp 0.4s forwards ease;
+    }
     .community-card {
       background-color: var(--card-bg);
       border-radius: var(--border-radius);
-      padding: 20px;
+      padding: 16px; /* Slightly reduced */
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
-      margin-bottom: 20px;
+      margin-bottom: 16px; /* Slightly reduced */
       position: relative;
     }
-    /* "Masjid Announcement" badge */
     .announcement-badge {
       position: absolute;
       top: -10px;
@@ -246,7 +286,7 @@
       margin-bottom: 6px;
     }
     .announcement-text {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.4;
     }
 
@@ -265,10 +305,21 @@
       content: attr(data-badge);
     }
     .current-prayer[data-badge="Now"]::after {
-      background-color: #30D158; /* iOS green */
+      background-color: #30D158;
     }
     .next-prayer[data-badge="Next"]::after {
-      background-color: #FF2D55; /* iOS pink/red */
+      background-color: #FF2D55;
+    }
+
+    /* Hadith Footer (only on Timetable Section) */
+    .hadith-footer {
+      text-align: center;
+      margin: 15px 0; /* Reduced from 20px */
+      padding: 12px;  /* Reduced from 16px */
+      background-color: var(--accent-color);
+      color: #fff;
+      border-radius: var(--border-radius);
+      font-size: 15px; /* Slightly smaller */
     }
 
     /* Bottom Nav (Pill-based) */
@@ -278,11 +329,14 @@
       left: 0;
       width: 100%;
       background-color: var(--card-bg);
+      /* Use safe-area inset for iOS devices with home indicator */
+      padding-bottom: env(safe-area-inset-bottom);
       box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 0;
+      /* Slightly reduced top padding for more balanced look */
+      padding-top: 6px;
       z-index: 999;
     }
     .nav-pill {
@@ -290,9 +344,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 10px;
-      padding: 10px 14px;
-      border-radius: 30px; /* pill shape */
+      margin: 0 8px; /* Slightly less horizontal spacing */
+      padding: 8px 12px; /* Slightly smaller padding */
+      border-radius: 30px;
       font-size: var(--nav-font-size);
       font-weight: 600;
       color: var(--text-color);
@@ -302,8 +356,8 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
     .nav-pill i {
-      font-size: 22px;
-      margin-bottom: 4px;
+      font-size: 20px; /* Slightly smaller icon size */
+      margin-bottom: 2px; /* Slightly reduced spacing */
     }
     .nav-pill span {
       display: block;
@@ -349,7 +403,15 @@
     
     <!-- Date & Ramadan Info -->
     <div class="date-section">
-      <div class="date-display" id="current-date">Friday, February 28, 2025</div>
+      <div class="date-display">
+        <button id="prev-date" class="date-nav-btn" aria-label="Previous Date">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <span id="current-date">Saturday, March 1, 2025</span>
+        <button id="next-date" class="date-nav-btn" aria-label="Next Date">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
       <div class="ramadan-counter" id="ramadan-counter">
         <svg viewBox="0 0 24 24" fill="white" aria-hidden="true">
           <path d="M12 2.25A9.75 9.75 0 1021.75 12 9.76 9.76 0 0012 2.25zm0 17.25A7.5 7.5 0 1119.5 12 7.5 7.5 0 0112 19.5z" fill-opacity="0.3"/>
@@ -362,23 +424,38 @@
     <!-- Timetable Section -->
     <section id="timetable-section">
       <div class="prayer-cards" id="prayer-cards"></div>
+      <!-- Hadith Footer visible only in Timetable Section -->
+      <div class="hadith-footer">
+        "The best charity is that given in Ramadan."<br>
+        Sunan Tirmidhi, Hadith: 663
+      </div>
     </section>
 
     <!-- Community Section -->
     <section id="community-section">
-      <div class="community-card">
-        <!-- "Masjid Announcement" badge -->
-        <div class="announcement-badge">Masjid Announcement</div>
-        
-        <div class="announcement-date">Feb 28, 2025</div>
-        <div class="announcement-text">
-          Taraweeh prayers begin tonight at 8PM - ladies and mens facilities available.
+      <div class="community-fade">
+        <div class="community-card">
+          <div class="announcement-badge">Masjid Announcement</div>
+          <div class="announcement-date">Feb 28, 2025</div>
+          <div class="announcement-text">
+            Ramadan Mubarak!<br><br>
+            The moon has been sighted, and Taraweeh prayers will begin tonight at 8 PM. For men, the prayers are in the main building, and for women, please use the rear prayer room. Kindly refrain from loitering after prayer.
+          </div>
         </div>
+      </div>
+      <div class="community-fade" style="text-align: center; margin-bottom: 20px;">
+        <a
+          href="mailto:jalalabaddeveloper@gmail.com?subject=Community%20Message"
+          style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: #fff; padding: 10px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow);"
+        >
+          <span style="font-size: 20px; font-weight: bold; margin-right: 6px;">+</span>
+          Submit a message
+        </a>
       </div>
     </section>
   </div>
 
-  <!-- Bottom Nav (Icons + Text) -->
+  <!-- Bottom Nav -->
   <div class="bottom-nav">
     <button class="nav-pill" id="nav-timetable" aria-label="Timetable">
       <i class="wi wi-day-sunny" aria-hidden="true"></i>
@@ -391,48 +468,10 @@
   </div>
   
   <script>
-    /*******************************************************
-     * 1. Display Current Date
-     *******************************************************/
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const currentDate = new Date().toLocaleDateString('en-US', dateOptions);
-    document.getElementById('current-date').textContent = currentDate;
 
-    /*******************************************************
-     * 2. Ramadan Day Calculation (Optional)
-     *******************************************************/
-    const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
-    const today = new Date();
-    const dayDiff = Math.floor((today - ramadanStart) / (1000 * 60 * 60 * 24)) + 1;
-    const ramadanCounter = document.getElementById('ramadan-counter');
-
-    if (dayDiff > 0 && dayDiff <= 30) {
-      ramadanCounter.textContent = `Ramadan: Day ${dayDiff}`;
-    } else if (dayDiff > 30) {
-      ramadanCounter.textContent = 'Ramadan has ended';
-    } else {
-      ramadanCounter.textContent = `${Math.abs(dayDiff)} days until Ramadan`;
-    }
-
-    /*******************************************************
-     * 3. CSV Data (8 Days)
-     *    Hardcoded array of objects for demonstration
-     *******************************************************/
+    // Prayer Data Array (dates in dd/mm/yy format) with 7 days
     const prayerData = [
-      {
-        date: "28/02/25",
-        fajr: "5:13 AM",
-        fajrJamaat: "5:33 AM",
-        sunrise: "6:55 AM",
-        dhuhr: "12:24 PM",
-        dhuhrJamaat: "1:15 PM",
-        asr: "3:54 PM",
-        asrJamaat: "4:30 PM",
-        maghrib: "5:47 PM",
-        maghribJamaat: "5:47 PM",
-        isha: "7:16 PM",
-        ishaJamaat: "8:00 PM"
-      },
       {
         date: "01/03/25",
         fajr: "5:13 AM",
@@ -530,112 +569,10 @@
         maghribJamaat: "5:57 PM",
         isha: "7:23 PM",
         ishaJamaat: "8:00 PM"
-      },
+      }
     ];
 
-    /*******************************************************
-     * 3b. Find Today's Row in CSV
-     *******************************************************/
-    // Helper to get dd/mm/yy string from today's date
-    function getTodayDDMMYY() {
-      const d = new Date();
-      const dd = String(d.getDate()).padStart(2, "0");
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const yy = String(d.getFullYear()).slice(-2); // last 2 digits
-      return `${dd}/${mm}/${yy}`;
-    }
-
-    const todayStr = getTodayDDMMYY(); // e.g. "28/02/25"
-    const todayRow = prayerData.find(row => row.date === todayStr);
-
-    /*******************************************************
-     * 3c. Build "prayers" array from CSV row (if found)
-     *******************************************************/
-    let prayers = [];
-    if (todayRow) {
-      prayers = [
-        {
-          name: "Fajr",
-          startTime: todayRow.fajr,
-          jamatTime: todayRow.fajrJamaat,
-          iconClass: "wi-horizon"
-        },
-        {
-          name: "Sunrise",
-          startTime: todayRow.sunrise,
-          jamatTime: null,
-          iconClass: "wi-sunrise"
-        },
-        {
-          name: "Dhuhr",
-          startTime: todayRow.dhuhr,
-          jamatTime: todayRow.dhuhrJamaat,
-          iconClass: "wi-day-sunny"
-        },
-        {
-          name: "Asr",
-          startTime: todayRow.asr,
-          jamatTime: todayRow.asrJamaat,
-          iconClass: "wi-day-sunny-overcast"
-        },
-        {
-          name: "Maghrib",
-          startTime: todayRow.maghrib,
-          jamatTime: todayRow.maghribJamaat,
-          iconClass: "wi-sunset"
-        },
-        {
-          name: "Isha | Taraweeh",
-          startTime: todayRow.isha,
-          jamatTime: todayRow.ishaJamaat,
-          iconClass: "wi-night-clear"
-        }
-      ];
-    } else {
-      // If no match, you could leave prayers blank or provide a fallback
-      prayers = [
-        {
-          name: "Fajr",
-          startTime: "--",
-          jamatTime: "--",
-          iconClass: "wi-horizon"
-        },
-        {
-          name: "Sunrise",
-          startTime: "--",
-          jamatTime: null,
-          iconClass: "wi-sunrise"
-        },
-        {
-          name: "Dhuhr",
-          startTime: "--",
-          jamatTime: "--",
-          iconClass: "wi-day-sunny"
-        },
-        {
-          name: "Asr",
-          startTime: "--",
-          jamatTime: "--",
-          iconClass: "wi-day-sunny-overcast"
-        },
-        {
-          name: "Maghrib",
-          startTime: "--",
-          jamatTime: "--",
-          iconClass: "wi-sunset"
-        },
-        {
-          name: "Isha | Taraweeh",
-          startTime: "--",
-          jamatTime: "--",
-          iconClass: "wi-night-clear"
-        }
-      ];
-    }
-
-    /*******************************************************
-     * 4. Convert Time to Minutes for "Now"/"Next" Logic
-     *******************************************************/
+    // Convert "5:47 PM" -> total minutes from midnight
     function timeToMinutes(timeStr) {
       if (!timeStr || timeStr === "--") return null;
       const [time, meridian] = timeStr.split(" ");
@@ -645,87 +582,166 @@
       return hh * 60 + mm;
     }
 
-    /*******************************************************
-     * 5. Determine Current & Next Prayer
-     *******************************************************/
-    const now = new Date();
-    const currentMins = now.getHours() * 60 + now.getMinutes();
+    // Format "dd/mm/yy" to full date (e.g., "Saturday, March 1, 2025")
+    function formatDisplayDate(dateStr) {
+      const [dd, mm, yy] = dateStr.split("/");
+      const fullYear = 2000 + parseInt(yy);
+      const dateObj = new Date(fullYear, parseInt(mm) - 1, parseInt(dd));
+      return dateObj.toLocaleDateString('en-US', dateOptions);
+    }
 
-    let prayerMinutes = prayers.map(p => timeToMinutes(p.startTime));
-    let currentIndex = -1;
-    for (let i = 0; i < prayerMinutes.length; i++) {
-      if (prayerMinutes[i] !== null && prayerMinutes[i] <= currentMins) {
-        currentIndex = i;
+    // Determine today's date index if available
+    let currentPrayerIndex = prayerData.findIndex(row => {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yy = String(d.getFullYear()).slice(-2);
+      const todayStr = `${dd}/${mm}/${yy}`;
+      return row.date === todayStr;
+    });
+    if (currentPrayerIndex === -1) currentPrayerIndex = 0;
+
+    function renderPrayers(selectedRow) {
+      const cardsContainer = document.getElementById("prayer-cards");
+      cardsContainer.innerHTML = "";
+      let prayers = [];
+      if (selectedRow) {
+        prayers = [
+          { name: "Fajr", startTime: selectedRow.fajr, jamatTime: selectedRow.fajrJamaat, iconClass: "wi-horizon" },
+          { name: "Sunrise", startTime: selectedRow.sunrise, jamatTime: null, iconClass: "wi-sunrise" },
+          { name: "Dhuhr", startTime: selectedRow.dhuhr, jamatTime: selectedRow.dhuhrJamaat, iconClass: "wi-day-sunny" },
+          { name: "Asr", startTime: selectedRow.asr, jamatTime: selectedRow.asrJamaat, iconClass: "wi-day-sunny-overcast" },
+          { name: "Maghrib", startTime: selectedRow.maghrib, jamatTime: selectedRow.maghribJamaat, iconClass: "wi-sunset" },
+          { name: "Isha | Taraweeh", startTime: selectedRow.isha, jamatTime: selectedRow.ishaJamaat, iconClass: "wi-night-clear" }
+        ];
+      } else {
+        // Fallback if date not found
+        prayers = [
+          { name: "Fajr", startTime: "--", jamatTime: "--", iconClass: "wi-horizon" },
+          { name: "Sunrise", startTime: "--", jamatTime: null, iconClass: "wi-sunrise" },
+          { name: "Dhuhr", startTime: "--", jamatTime: "--", iconClass: "wi-day-sunny" },
+          { name: "Asr", startTime: "--", jamatTime: "--", iconClass: "wi-day-sunny-overcast" },
+          { name: "Maghrib", startTime: "--", jamatTime: "--", iconClass: "wi-sunset" },
+          { name: "Isha | Taraweeh", startTime: "--", jamatTime: "--", iconClass: "wi-night-clear" }
+        ];
+      }
+
+      // Determine current & next prayer based on current time
+      const now = new Date();
+      const nowMins = now.getHours() * 60 + now.getMinutes();
+      const prayerMinutes = prayers.map(p => timeToMinutes(p.startTime));
+      let currentIndex = -1;
+      for (let i = 0; i < prayerMinutes.length; i++) {
+        if (prayerMinutes[i] !== null && prayerMinutes[i] <= nowMins) {
+          currentIndex = i;
+        }
+      }
+      if (currentIndex >= 0) {
+        prayers[currentIndex].isCurrent = true;
+      }
+      let nextIndex = currentIndex + 1;
+      if (currentIndex === -1) {
+        nextIndex = prayerMinutes.findIndex(m => m !== null);
+      }
+      if (nextIndex >= 0 && nextIndex < prayers.length) {
+        prayers[nextIndex].isNext = true;
+      }
+
+      // Render each prayer card
+      prayers.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "prayer-card";
+        if (p.isCurrent) {
+          card.classList.add("current-prayer");
+          card.setAttribute("data-badge", "Now");
+        } else if (p.isNext) {
+          card.classList.add("next-prayer");
+          card.setAttribute("data-badge", "Next");
+        }
+        card.innerHTML = `
+          <i class="prayer-icon ${p.iconClass}" aria-hidden="true"></i>
+          <div class="prayer-name">${p.name}</div>
+          ${
+            p.label
+              ? `<div class="prayer-label">${p.label}</div>`
+              : ""
+          }
+          <div class="prayer-time">${p.startTime || ""}</div>
+          ${
+            p.jamatTime
+              ? `
+                <div class="jamat-label">Jamaat</div>
+                <div class="prayer-time-secondary">${p.jamatTime}</div>
+              `
+              : ""
+          }
+        `;
+        cardsContainer.appendChild(card);
+
+        // Staggered fade-in
+        setTimeout(() => {
+          card.classList.add("fade-in");
+        }, idx * 100);
+      });
+    }
+
+    // Ramadan counter logic (increments day after Maghrib)
+    function updateRamadanCounter(selectedRow) {
+      const ramadanCounter = document.getElementById('ramadan-counter');
+      const now = new Date();
+      const currentMins = now.getHours() * 60 + now.getMinutes();
+      let ramadanDay;
+      if (selectedRow) {
+        const maghribTime = timeToMinutes(selectedRow.maghrib);
+        if (currentMins < maghribTime) {
+          ramadanDay = currentPrayerIndex + 1;
+        } else {
+          ramadanDay = currentPrayerIndex + 2;
+        }
+        ramadanCounter.textContent = (ramadanDay <= 30)
+          ? `Ramadan: Day ${ramadanDay}`
+          : 'Ramadan has ended';
+      } else {
+        // If no matching row => possibly before or after Ramadan
+        const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
+        if (now < ramadanStart) {
+          const diffDays = Math.ceil((ramadanStart - now) / (1000 * 60 * 60 * 24));
+          ramadanCounter.textContent = `${diffDays} days until Ramadan`;
+        } else {
+          ramadanCounter.textContent = 'Ramadan has ended';
+        }
       }
     }
-    if (currentIndex >= 0) {
-      prayers[currentIndex].isCurrent = true;
-    }
-    let nextIndex = currentIndex + 1;
-    if (currentIndex === -1) {
-      nextIndex = prayerMinutes.findIndex(m => m !== null);
-    }
-    if (nextIndex >= 0 && nextIndex < prayers.length) {
-      prayers[nextIndex].isNext = true;
+
+    function updateDisplay(index) {
+      const selectedRow = prayerData[index];
+      document.getElementById('current-date').textContent = formatDisplayDate(selectedRow.date);
+      renderPrayers(selectedRow);
+      updateRamadanCounter(selectedRow);
     }
 
-    /*******************************************************
-     * 6. Render Prayer Cards Dynamically
-     *******************************************************/
-    const cardsContainer = document.getElementById("prayer-cards");
+    // Initialize
+    updateDisplay(currentPrayerIndex);
 
-    prayers.forEach((p, idx) => {
-      const card = document.createElement("div");
-      card.className = "prayer-card";
-      
-      // Mark "Now" or "Next"
-      if (p.isCurrent) {
-        card.classList.add("current-prayer");
-        card.setAttribute("data-badge", "Now");
-      } else if (p.isNext) {
-        card.classList.add("next-prayer");
-        card.setAttribute("data-badge", "Next");
+    // Date nav
+    document.getElementById('prev-date').addEventListener('click', () => {
+      if (currentPrayerIndex > 0) {
+        currentPrayerIndex--;
+        updateDisplay(currentPrayerIndex);
       }
-
-      // Build card HTML
-      card.innerHTML = `
-        <i class="prayer-icon ${p.iconClass}" aria-hidden="true"></i>
-        <div class="prayer-name">${p.name}</div>
-        ${
-          p.label
-            ? `<div class="prayer-label">${p.label}</div>`
-            : ""
-        }
-        <div class="prayer-time">${p.startTime || ""}</div>
-        ${
-          p.jamatTime
-            ? `
-              <div class="jamat-label">Jamaat</div>
-              <div class="prayer-time-secondary">${p.jamatTime}</div>
-            `
-            : ""
-        }
-      `;
-
-      // Append to DOM
-      cardsContainer.appendChild(card);
-
-      // Staggered fade-in effect
-      setTimeout(() => {
-        card.classList.add("fade-in");
-      }, idx * 100);
+    });
+    document.getElementById('next-date').addEventListener('click', () => {
+      if (currentPrayerIndex < prayerData.length - 1) {
+        currentPrayerIndex++;
+        updateDisplay(currentPrayerIndex);
+      }
     });
 
-    /*******************************************************
-     * 7. Bottom Nav Tab Handling
-     *******************************************************/
+    // Bottom nav tab handling
     const timetableSection = document.getElementById("timetable-section");
     const communitySection = document.getElementById("community-section");
     const navTimetable = document.getElementById("nav-timetable");
     const navCommunity = document.getElementById("nav-community");
-
-    // Show timetable by default
-    showTab("timetable");
 
     function showTab(tab) {
       if (tab === "timetable") {
@@ -738,8 +754,19 @@
         communitySection.style.display = "block";
         navTimetable.classList.remove("active");
         navCommunity.classList.add("active");
+        const fadeItems = communitySection.querySelectorAll(".community-fade");
+        fadeItems.forEach((item, idx) => {
+          item.classList.remove("fade-in");
+          item.style.opacity = 0;
+          item.style.transform = "translateY(10px)";
+          setTimeout(() => {
+            item.classList.add("fade-in");
+          }, idx * 100);
+        });
       }
     }
+
+    showTab("timetable");
 
     navTimetable.addEventListener("click", () => showTab("timetable"));
     navCommunity.addEventListener("click", () => showTab("community"));
