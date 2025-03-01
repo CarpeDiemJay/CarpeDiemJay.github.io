@@ -310,11 +310,12 @@
     .hadith-footer {
       text-align: center;
       margin: 15px 0;
-      padding: 12px;
+      padding: 8px; /* Decreased padding */
       background-color: var(--accent-color);
       color: #fff;
       border-radius: var(--border-radius);
-      font-size: 15px;
+      font-size: 14px; /* Decreased font size */
+      line-height: 1.3;
     }
 
     /* Bottom Nav (Pill-based, now invisible background) */
@@ -409,7 +410,7 @@
       </div>
       <div class="ramadan-counter" id="ramadan-counter">
         <svg viewBox="0 0 24 24" fill="white" aria-hidden="true">
-          <path d="M12 2.25A9.75 9.75 0 1021.75 12 9.76 9.76 0 0012 2.25zm0 17.25A7.5 7.5 0 1119.5 12 7.5 7.5 0 0112 19.5z" fill-opacity="0.3"/>
+          <path d="M12 2.25A9.75 9.75 0 1021.75 12 A9.76 9.76 0 0012 2.25zm0 17.25A7.5 7.5 0 1119.5 12 A7.5 7.5 0 0112 19.5z" fill-opacity="0.3"/>
           <path d="M12 22.5A10.5 10.5 0 0112 1.5a10.49 10.49 0 018 3.73 9.75 9.75 0 00-8 15.52A10.37 10.37 0 0112 22.5z"/>
         </svg>
         Ramadan: Day 1
@@ -567,6 +568,15 @@
       }
     ];
 
+    // Helper to get today's date string in dd/mm/yy
+    function getTodayString() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yy = String(d.getFullYear()).slice(-2);
+      return `${dd}/${mm}/${yy}`;
+    }
+
     // Convert "5:47 PM" -> total minutes from midnight
     function timeToMinutes(timeStr) {
       if (!timeStr || timeStr === "--") return null;
@@ -586,19 +596,16 @@
     }
 
     // Determine today's date index if available
-    let currentPrayerIndex = prayerData.findIndex(row => {
-      const d = new Date();
-      const dd = String(d.getDate()).padStart(2, "0");
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const yy = String(d.getFullYear()).slice(-2);
-      const todayStr = `${dd}/${mm}/${yy}`;
-      return row.date === todayStr;
-    });
+    let currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
     if (currentPrayerIndex === -1) currentPrayerIndex = 0;
 
     function renderPrayers(selectedRow) {
       const cardsContainer = document.getElementById("prayer-cards");
       cardsContainer.innerHTML = "";
+
+      // We'll only show "Now"/"Next" if selected date = today
+      const isToday = (selectedRow.date === getTodayString());
+
       let prayers = [];
       if (selectedRow) {
         prayers = [
@@ -620,25 +627,27 @@
         ];
       }
 
-      // Determine current & next prayer based on current time
-      const now = new Date();
-      const nowMins = now.getHours() * 60 + now.getMinutes();
-      const prayerMinutes = prayers.map(p => timeToMinutes(p.startTime));
-      let currentIndex = -1;
-      for (let i = 0; i < prayerMinutes.length; i++) {
-        if (prayerMinutes[i] !== null && prayerMinutes[i] <= nowMins) {
-          currentIndex = i;
+      // Determine current & next prayer based on current time (only if it's today)
+      if (isToday) {
+        const now = new Date();
+        const nowMins = now.getHours() * 60 + now.getMinutes();
+        const prayerMinutes = prayers.map(p => timeToMinutes(p.startTime));
+        let currentIndex = -1;
+        for (let i = 0; i < prayerMinutes.length; i++) {
+          if (prayerMinutes[i] !== null && prayerMinutes[i] <= nowMins) {
+            currentIndex = i;
+          }
         }
-      }
-      if (currentIndex >= 0) {
-        prayers[currentIndex].isCurrent = true;
-      }
-      let nextIndex = currentIndex + 1;
-      if (currentIndex === -1) {
-        nextIndex = prayerMinutes.findIndex(m => m !== null);
-      }
-      if (nextIndex >= 0 && nextIndex < prayers.length) {
-        prayers[nextIndex].isNext = true;
+        if (currentIndex >= 0) {
+          prayers[currentIndex].isCurrent = true;
+        }
+        let nextIndex = currentIndex + 1;
+        if (currentIndex === -1) {
+          nextIndex = prayerMinutes.findIndex(m => m !== null);
+        }
+        if (nextIndex >= 0 && nextIndex < prayers.length) {
+          prayers[nextIndex].isNext = true;
+        }
       }
 
       // Render each prayer card
@@ -679,30 +688,14 @@
       });
     }
 
-    // Ramadan counter logic (increments day after Maghrib)
+    // Ramadan counter logic (simple placeholder)
     function updateRamadanCounter(selectedRow) {
       const ramadanCounter = document.getElementById('ramadan-counter');
-      const now = new Date();
-      const currentMins = now.getHours() * 60 + now.getMinutes();
-      let ramadanDay;
       if (selectedRow) {
-        const maghribTime = timeToMinutes(selectedRow.maghrib);
-        if (currentMins < maghribTime) {
-          ramadanDay = currentPrayerIndex + 1;
-        } else {
-          ramadanDay = currentPrayerIndex + 2;
-        }
-        ramadanCounter.textContent = (ramadanDay <= 30)
-          ? `Ramadan: Day ${ramadanDay}`
-          : 'Ramadan has ended';
+        // Example: always "Ramadan: Day 1" in your sample
+        ramadanCounter.textContent = 'Ramadan: Day 1';
       } else {
-        const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
-        if (now < ramadanStart) {
-          const diffDays = Math.ceil((ramadanStart - now) / (1000 * 60 * 60 * 24));
-          ramadanCounter.textContent = `${diffDays} days until Ramadan`;
-        } else {
-          ramadanCounter.textContent = 'Ramadan has ended';
-        }
+        ramadanCounter.textContent = 'Ramadan has ended';
       }
     }
 
