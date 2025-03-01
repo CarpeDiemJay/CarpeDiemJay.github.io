@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/CarpeDiemJay/CarpeDiemJay.github.io/blob/main/images/185X180.png?raw=true">
   <title>Jalalabad Mosque</title>
   <!-- Weather Icons by Erik Flowers (v2.0.9) -->
   <link
@@ -15,7 +14,7 @@
   />
   <!-- Font Awesome for nicer arrow icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="icon" href="https://github.com/CarpeDiemJay/CarpeDiemJay.github.io/blob/f84bae6385c380ca92ca665088dd4b49e2897e21/images/jalalabad_logo_v1.png?raw=true" type="image/png">
+  
   <style>
     :root {
       /* Core Colors */
@@ -78,26 +77,24 @@
       max-width: 800px;
       width: 100%;
       margin: 0 auto;
-      /* Decreased top padding from 20px to 10px to pull content up */
-      padding: 10px;
-      /* Also reduced bottom padding from 60px to 50px for a tighter fit */
-      padding-bottom: 50px;
+      /* Slightly less top padding, a bit more bottom padding to accommodate nav */
+      padding: 12px 20px;
+      padding-bottom: 70px; 
       flex: 1;
     }
 
     /* Header */
     header {
       text-align: center;
-      /* Reduced margin-bottom and adjusted padding to reduce blank space */
-      margin-bottom: 10px;
-      padding: 10px 0 8px;
+      margin-bottom: 8px;
+      padding: 0; /* Removing extra padding so title is lifted up */
       position: relative;
     }
     header h1 {
       font-size: var(--title-font-size);
       font-weight: var(--title-weight);
       letter-spacing: -0.5px;
-      margin-bottom: 0;
+      margin: 0; /* No extra margin below the title */
       background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -107,8 +104,7 @@
     /* Date & Ramadan Info */
     .date-section {
       text-align: center;
-      /* Reduced margins so the date is closer to the header */
-      margin: 5px 0 10px;
+      margin: 8px 0 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -116,7 +112,7 @@
     .date-display {
       font-weight: 500;
       font-size: 16px;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -166,14 +162,14 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
-      margin-bottom: 15px; /* Slightly reduced from 20px */
+      margin-bottom: 15px;
     }
 
     /* Prayer Card */
     .prayer-card {
       background-color: var(--card-bg);
       border-radius: var(--border-radius);
-      padding: 20px; /* Reduced from 24px */
+      padding: 20px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
       display: flex;
@@ -205,8 +201,8 @@
 
     /* Prayer Icon */
     .prayer-icon {
-      font-size: 42px; /* Slightly smaller than 45px */
-      margin-bottom: 12px; /* Slightly reduced margin */
+      font-size: 42px;
+      margin-bottom: 12px;
       color: var(--primary-color);
       flex-shrink: 0;
     }
@@ -215,7 +211,7 @@
     .prayer-name {
       font-size: 18px;
       font-weight: 600;
-      margin-bottom: 6px; /* Reduced */
+      margin-bottom: 6px;
       text-align: center;
     }
     .prayer-label {
@@ -262,10 +258,10 @@
     .community-card {
       background-color: var(--card-bg);
       border-radius: var(--border-radius);
-      padding: 16px; /* Slightly reduced */
+      padding: 16px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
-      margin-bottom: 16px; /* Slightly reduced */
+      margin-bottom: 16px;
       position: relative;
     }
     .announcement-badge {
@@ -314,12 +310,12 @@
     /* Hadith Footer (only on Timetable Section) */
     .hadith-footer {
       text-align: center;
-      margin: 15px 0; /* Reduced from 20px */
-      padding: 12px;  /* Reduced from 16px */
+      margin: 15px 0;
+      padding: 12px;
       background-color: var(--accent-color);
       color: #fff;
       border-radius: var(--border-radius);
-      font-size: 15px; /* Slightly smaller */
+      font-size: 15px;
     }
 
     /* Bottom Nav (Pill-based) */
@@ -330,13 +326,13 @@
       width: 100%;
       background-color: var(--card-bg);
       /* Use safe-area inset for iOS devices with home indicator */
-      padding-bottom: env(safe-area-inset-bottom);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
       box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Slightly reduced top padding for more balanced look */
-      padding-top: 6px;
+      /* More top padding for a less "squeezed" look */
+      padding-top: 14px;
       z-index: 999;
     }
     .nav-pill {
@@ -344,8 +340,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 8px; /* Slightly less horizontal spacing */
-      padding: 8px 12px; /* Slightly smaller padding */
+      margin: 0 12px;
+      padding: 10px 14px;
       border-radius: 30px;
       font-size: var(--nav-font-size);
       font-weight: 600;
@@ -356,8 +352,8 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
     .nav-pill i {
-      font-size: 20px; /* Slightly smaller icon size */
-      margin-bottom: 2px; /* Slightly reduced spacing */
+      font-size: 20px;
+      margin-bottom: 4px;
     }
     .nav-pill span {
       display: block;
@@ -702,7 +698,6 @@
           ? `Ramadan: Day ${ramadanDay}`
           : 'Ramadan has ended';
       } else {
-        // If no matching row => possibly before or after Ramadan
         const ramadanStart = new Date(2025, 1, 28); // Feb 28, 2025
         if (now < ramadanStart) {
           const diffDays = Math.ceil((ramadanStart - now) / (1000 * 60 * 60 * 24));
