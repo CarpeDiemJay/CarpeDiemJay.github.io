@@ -115,11 +115,13 @@
       margin: 0 auto;
       padding: 12px 20px 20px;
       flex: 1;
+      /* 1) Universal bottom padding so last card stays above nav */
+      padding-bottom: 80px;
     }
 
-    /* If Galaxy Z Fold is detected, add extra bottom padding */
+    /* 2) If Galaxy Z Fold is detected, add extra bottom padding */
     .z-fold-fix .container {
-      padding-bottom: 120px; /* Adjust as needed */
+      padding-bottom: 80px; /* Adjust as needed for more scroll space */
     }
 
     /* Header */
@@ -289,17 +291,14 @@
       color: var(--primary-color);
       text-align: center;
     }
-    /* We'll hide the separate "Jamaat" label to simplify, or keep it small if you like */
     .jamat-label {
-      font-size: var(--label-font-size); /* or bigger, e.g. 16px */
-      color: #000;                      /* solid black text */
+      font-size: var(--label-font-size);
+      color: #000; /* solid black text for better visibility */
       margin-top: -2px;
       margin-bottom: 2px;
       text-align: center;
-      font-weight: 700;                 /* make it bold */
+      font-weight: 700; /* make it bold */
     }
-
-    /* Make Jamaat time the same size as main time */
     .prayer-time-secondary {
       font-size: var(--time-font-size);
       font-weight: 700;
@@ -427,6 +426,21 @@
       color: var(--text-color) !important;
     }
 
+    /* 3) Smaller nav bar for Z Fold 3/4/5 specifically */
+    .z-fold-345-nav-fix .bottom-nav {
+      padding: 4px;          /* less overall padding for the nav bar */
+      border-radius: 9999px; /* keep the pill shape */
+    }
+    .z-fold-345-nav-fix .nav-item {
+      padding: 8px 10px;     /* smaller horizontal/vertical padding */
+      font-size: 12px;       /* slightly smaller text */
+      margin: 0 2px;         /* reduce margin between nav items */
+    }
+    .z-fold-345-nav-fix .nav-item i {
+      font-size: 16px;       /* smaller icon */
+      margin-right: 6px;     /* tweak spacing */
+    }
+
     /* Responsive Adjustments */
     @media (max-width: 600px) {
       .prayer-cards {
@@ -456,12 +470,21 @@
   </style>
 </head>
 <body>
-  <!-- 1) Detect Galaxy Z Fold in user agent, add .z-fold-fix to <body> if found -->
+  <!-- Detect Galaxy Z Fold and also specific models 3, 4, 5 -->
   <script>
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    // Simple detection for Galaxy Z Fold (e.g., SM-F9xx series)
+
+    // Existing detection for "Galaxy Z Fold" or SM-F9
     if (/SM-F9/i.test(userAgent) || /Galaxy Z Fold/i.test(userAgent)) {
       document.body.classList.add("z-fold-fix");
+    }
+
+    // Additional detection for Z Fold 3/4/5 model patterns
+    // Z Fold 3 => SM-F711 or SM-F926
+    // Z Fold 4 => SM-F936
+    // Z Fold 5 => SM-F946
+    if (/SM-F711|SM-F926|SM-F936|SM-F946/i.test(userAgent)) {
+      document.body.classList.add("z-fold-345-nav-fix");
     }
   </script>
 
