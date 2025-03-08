@@ -6,10 +6,17 @@
   <title>Jalalabad Mosque</title>
 
   <!-- Google Font: Inter -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+  />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png" />
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png"
+  />
 
   <!-- Web App Manifest for Android -->
   <link rel="manifest" href="manifest.json" />
@@ -19,7 +26,10 @@
   <meta property="og:description" content="Prayer Timetable & Community Updates" />
   <meta property="og:url" content="https://jalalabadmasjid.github.io/jalalabadmasjid/" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png" />
+  <meta
+    property="og:image"
+    content="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png"
+  />
 
   <!-- Theme Color / Dark Mode Support -->
   <meta name="color-scheme" content="light dark">
@@ -32,16 +42,24 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" media="(prefers-color-scheme: dark)">
 
   <!-- Weather Icons (for prayer cards) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css"
     integrity="sha512-9N7p+IGexZTxGPa0BJqOAzsNNoOkTLO4qlZbdNKk5LbeCEu5ZIO8iYJ2IfS7yynMfubF9CV+0mZClBOf9W5yxg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <!-- Font Awesome (for icons) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 
   <style>
-    /* --- Your CSS remains unchanged --- */
     :root {
+      /* Core Colors */
       --primary-color: #007AFF;
       --accent-color: #5E5CE6;
       --bg-color: #F5F5F7;
@@ -49,14 +67,19 @@
       --text-color: #1C1C1E;
       --secondary-text: #6E6E73;
       --border-color: rgba(0, 0, 0, 0.06);
+
+      /* Layout & Effects */
       --border-radius: 16px;
       --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+      /* Typography */
       --title-font-size: 34px;
       --title-weight: 700;
       --time-font-size: 26px;
       --label-font-size: 14px;
       --nav-font-size: 13px;
     }
+
     @media (prefers-color-scheme: dark) {
       :root {
         --primary-color: #0A84FF;
@@ -69,6 +92,7 @@
         --shadow: 0 4px 16px rgba(255, 255, 255, 0.08);
       }
     }
+
     * {
       margin: 0;
       padding: 0;
@@ -76,10 +100,12 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+
     html, body {
       height: 100%;
       margin: 0;
     }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
@@ -89,21 +115,29 @@
       min-height: 100vh;
       -webkit-text-size-adjust: 100%;
     }
+
+    /* Make all paragraphs 15px */
     p {
       font-size: 15px;
       line-height: 1.4;
     }
+
     .container {
       max-width: 800px;
       width: 100%;
       margin: 0 auto;
       padding: 12px 20px 20px;
       flex: 1;
+      /* 1) Universal bottom padding so last card stays above nav */
       padding-bottom: 80px;
     }
+
+    /* 2) If Galaxy Z Fold is detected, add extra bottom padding */
     .z-fold-fix .container {
-      padding-bottom: 80px;
+      padding-bottom: 80px; /* Adjust as needed for more scroll space */
     }
+
+    /* Header */
     header {
       text-align: center;
       margin-bottom: 8px;
@@ -120,7 +154,346 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    /* ... Rest of your CSS for date section, cards, nav, etc. ... */
+
+    /* Date & Ramadan Info */
+    .date-section {
+      text-align: center;
+      margin: 8px 0 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .date-display {
+      font-weight: 500;
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .date-nav-btn {
+      background-color: var(--primary-color);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .date-nav-btn:hover {
+      background-color: var(--accent-color);
+    }
+
+    /* Ramadan & Iftar counters side by side */
+    .ramadan-iftar-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap; /* so they stack on mobile if needed */
+    }
+
+    .ramadan-counter,
+    .iftar-counter {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 15px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+    }
+
+    /* Ramadan counter icon style */
+    .ramadan-counter svg {
+      margin-right: 6px;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Iftar counter icon (Font Awesome utensils) */
+    .iftar-counter i {
+      margin-right: 6px;
+    }
+
+    /* Sections (Timetable / Community / About) */
+    #timetable-section,
+    #community-section,
+    #about-section {
+      display: none; /* toggled via JS */
+    }
+
+    /* Prayer Cards Grid */
+    .prayer-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+
+    /* Prayer Card */
+    .prayer-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .prayer-card.fade-in {
+      animation: fadeInUp 0.8s forwards ease;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .prayer-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Prayer Icon */
+    .prayer-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    /* Prayer Details */
+    .prayer-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .prayer-label {
+      font-size: var(--label-font-size);
+      color: var(--secondary-text);
+      margin-bottom: 6px;
+      text-align: center;
+      background-color: rgba(0, 122, 255, 0.1);
+      border-radius: 12px;
+      padding: 3px 10px;
+      display: inline-block;
+    }
+    .prayer-time {
+      font-size: var(--time-font-size);
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+    .jamat-label {
+      font-size: var(--label-font-size);
+      margin-top: -2px;
+      margin-bottom: 2px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .prayer-time-secondary {
+      font-size: var(--time-font-size);
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    /* Community & About Section fade classes */
+    .community-fade {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .community-fade.fade-in {
+      animation: fadeInUp 0.4s forwards ease;
+    }
+    .community-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    /* Announcement date smaller & grey */
+    .announcement-date {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .announcement-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background-color: var(--accent-color);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* "Now" & "Next" Badges */
+    .current-prayer::after,
+    .next-prayer::after {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      content: attr(data-badge);
+    }
+    .current-prayer[data-badge="Now"]::after {
+      background-color: #30D158;
+    }
+    .next-prayer[data-badge="Next"]::after {
+      background-color: #FF2D55;
+    }
+    .current-prayer {
+      border: 3px solid var(--accent-color) !important;
+      box-shadow: 0 0 10px rgba(94, 92, 230, 0.2) !important;
+    }
+
+    /* Bottom Nav (single pill) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      background-color: var(--card-bg);
+      border-radius: 9999px;
+      box-shadow: var(--shadow);
+      padding: 8px;
+      z-index: 999;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 9999px;
+      margin: 0 4px;
+      padding: 10px 14px;
+      font-size: var(--nav-font-size);
+      color: var(--text-color);
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .nav-item i {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+    .nav-item.active {
+      background-color: var(--accent-color);
+      color: #fff;
+    }
+    .nav-item.animate-pop {
+      animation: subtlePop 0.4s ease-out forwards;
+    }
+    @keyframes subtlePop {
+      0% {
+        transform: scale(0.95);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Purple card styling for the hadith if needed */
+    .hadith-card {
+      background-color: var(--card-bg) !important;
+      color: var(--text-color) !important;
+    }
+
+    /* Smaller nav bar for Z Fold 3/4/5 specifically */
+    .z-fold-345-nav-fix .bottom-nav {
+      padding: 4px;
+      border-radius: 9999px;
+    }
+    .z-fold-345-nav-fix .nav-item {
+      padding: 8px 10px;
+      font-size: 12px;
+      margin: 0 2px;
+    }
+    .z-fold-345-nav-fix .nav-item i {
+      font-size: 16px;
+      margin-right: 6px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .prayer-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+      .prayer-card {
+        padding: 14px;
+      }
+      .prayer-name {
+        font-size: 16px;
+      }
+      .prayer-time {
+        font-size: 22px;
+      }
+      .prayer-time-secondary {
+        font-size: 22px;
+      }
+    }
+    @media (max-width: 400px) {
+      .prayer-cards {
+        grid-template-columns: 1fr;
+      }
+      .nav-item i {
+        margin-right: 4px;
+      }
+    }
+
+    /* Jumuah Timings Section */
+    .jumuah-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: rgb(0, 0, 0);
+    }
+    .jumuah-section span {
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
@@ -268,7 +641,7 @@
       return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hh, mm, 0);
     }
 
-    // Global variable for prayer data (will be loaded from external JSON)
+    // Global variable for prayer data (to be loaded from external JSON)
     let prayerData = [];
 
     // Load prayer data from prayerData.json
@@ -468,7 +841,8 @@
     }
 
     // Update display for the selected day's data
-    let currentPrayerIndex = 0;
+    let currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
+    if (currentPrayerIndex === -1) currentPrayerIndex = 0;
     function updateDisplay(index) {
       const selectedRow = prayerData[index];
       document.getElementById('current-date').textContent = formatDisplayDate(selectedRow.date);
