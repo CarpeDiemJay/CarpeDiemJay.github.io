@@ -226,9 +226,8 @@
     /* Sections (Timetable / Community / About) */
     #timetable-section,
     #community-section,
-    #about-section,
-    #jummuah-section {
-      display: none; /* toggled via JS (except Jummuah, which we'll show or hide as needed) */
+    #about-section {
+      display: none; /* toggled via JS */
     }
 
     /* Prayer Cards Grid */
@@ -480,6 +479,22 @@
         margin-right: 4px;
       }
     }
+
+    /* ---- NEW Jumuah Timings Section ---- */
+    .jumuah-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #b91c1c; /* You can change to any color or gradient */
+    }
+    .jumuah-section span {
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -542,6 +557,11 @@
 
       <!-- Prayer Cards -->
       <div class="prayer-cards" id="prayer-cards"></div>
+
+      <!-- NEW: Jumuah Timings Section (Horizontal) -->
+      <div class="jumuah-section">
+        <span>Friday Prayers: Khutbah 12:30pm, Jamaat 1:15pm</span>
+      </div>
     </section>
 
     <!-- Community Section -->
@@ -595,20 +615,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Jumuah Timings Section -->
-    <section id="jummuah-section" style="display: block; margin-top: 20px;">
-      <div class="community-fade">
-        <div class="community-card">
-          <div class="announcement-badge">Jumuah Timings</div>
-          <p style="margin-top: 6px;">
-            Khutbah: 12:30 PM<br>
-            Jamat: 1:15 PM
-          </p>
-        </div>
-      </div>
-    </section>
-
   </div>
 
   <!-- Bottom Nav -->
@@ -1166,7 +1172,6 @@
     const timetableSection = document.getElementById("timetable-section");
     const communitySection = document.getElementById("community-section");
     const aboutSection = document.getElementById("about-section");
-    const jummuahSection = document.getElementById("jummuah-section"); // new
 
     // Nav items
     const navTimetable = document.getElementById("nav-timetable");
@@ -1182,16 +1187,11 @@
         timetableSection.style.display = "block";
         communitySection.style.display = "none";
         aboutSection.style.display = "none";
-        // Keep Jumuah visible at bottom (or hide if you prefer)
-        jummuahSection.style.display = "block";
-
         navTimetable.classList.add("active", "animate-pop");
       } else if (tab === "community") {
         timetableSection.style.display = "none";
         communitySection.style.display = "block";
         aboutSection.style.display = "none";
-        jummuahSection.style.display = "none";
-
         navCommunity.classList.add("active", "animate-pop");
 
         // Fade in community items
@@ -1208,8 +1208,6 @@
         timetableSection.style.display = "none";
         communitySection.style.display = "none";
         aboutSection.style.display = "block";
-        jummuahSection.style.display = "none";
-
         navAbout.classList.add("active", "animate-pop");
 
         // Fade in about items
