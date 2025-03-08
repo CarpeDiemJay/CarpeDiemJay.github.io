@@ -18,6 +18,9 @@
     href="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png"
   />
 
+  <!-- (NEW) Web App Manifest for Android -->
+  <link rel="manifest" href="manifest.json" />
+
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Jalalabad Mosque" />
   <meta property="og:description" content="Prayer Timetable & Community Updates" />
@@ -27,6 +30,16 @@
     property="og:image"
     content="https://raw.githubusercontent.com/JalalabadMasjid/jalalabadmasjid/refs/heads/main/images/jalalabad_masjid_web_app_logo.png"
   />
+
+  <!-- Theme Color / Dark Mode Support -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+  <!-- For iOS if you want “app mode” styling -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" media="(prefers-color-scheme: dark)">
 
   <!-- Weather Icons (for prayer cards) -->
   <link
@@ -213,8 +226,9 @@
     /* Sections (Timetable / Community / About) */
     #timetable-section,
     #community-section,
-    #about-section {
-      display: none; /* toggled via JS */
+    #about-section,
+    #jummuah-section {
+      display: none; /* toggled via JS (except Jummuah, which we'll show or hide as needed) */
     }
 
     /* Prayer Cards Grid */
@@ -293,7 +307,6 @@
     }
     .jamat-label {
       font-size: var(--label-font-size);
-      color: #000; /* solid black text for better visibility */
       margin-top: -2px;
       margin-bottom: 2px;
       text-align: center;
@@ -582,6 +595,20 @@
         </div>
       </div>
     </section>
+
+    <!-- Jumuah Timings Section -->
+    <section id="jummuah-section" style="display: block; margin-top: 20px;">
+      <div class="community-fade">
+        <div class="community-card">
+          <div class="announcement-badge">Jumuah Timings</div>
+          <p style="margin-top: 6px;">
+            Khutbah: 12:30 PM<br>
+            Jamat: 1:15 PM
+          </p>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <!-- Bottom Nav -->
@@ -749,6 +776,104 @@
         maghrib: "5:57 PM",
         maghribJamaat: "5:57 PM",
         isha: "7:23 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "08/03/25",
+        fajr: "4:58 AM",
+        fajrJamaat: "5:20 AM",
+        sunrise: "6:38 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:06 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "5:59 PM",
+        maghribJamaat: "5:59 PM",
+        isha: "7:25 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "09/03/25",
+        fajr: "4:55 AM",
+        fajrJamaat: "5:15 AM",
+        sunrise: "6:35 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:08 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "6:01 PM",
+        maghribJamaat: "6:01 PM",
+        isha: "7:25 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "10/03/25",
+        fajr: "4:53 AM",
+        fajrJamaat: "5:13 AM",
+        sunrise: "6:33 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:09 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "6:03 PM",
+        maghribJamaat: "6:03 PM",
+        isha: "7:27 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "11/03/25",
+        fajr: "4:50 AM",
+        fajrJamaat: "5:10 AM",
+        sunrise: "6:30 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:11 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "6:04 PM",
+        maghribJamaat: "6:04 PM",
+        isha: "7:28 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "12/03/25",
+        fajr: "4:48 AM",
+        fajrJamaat: "5:08 AM",
+        sunrise: "6:28 AM",
+        dhuhr: "12:23 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:12 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "6:06 PM",
+        maghribJamaat: "6:06 PM",
+        isha: "7:30 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "13/03/25",
+        fajr: "4:46 AM",
+        fajrJamaat: "5:06 AM",
+        sunrise: "6:26 AM",
+        dhuhr: "12:21 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:14 PM",
+        asrJamaat: "4:30 PM",
+        maghrib: "6:07 PM",
+        maghribJamaat: "6:07 PM",
+        isha: "7:32 PM",
+        ishaJamaat: "8:00 PM"
+      },
+      {
+        date: "14/03/25",
+        fajr: "4:43 AM",
+        fajrJamaat: "5:03 AM",
+        sunrise: "6:23 AM",
+        dhuhr: "12:21 PM",
+        dhuhrJamaat: "1:15 PM",
+        asr: "4:16 PM",
+        asrJamaat: "4:45 PM",
+        maghrib: "6:10 PM",
+        maghribJamaat: "6:10 PM",
+        isha: "7:34 PM",
         ishaJamaat: "8:00 PM"
       }
     ];
@@ -1041,6 +1166,7 @@
     const timetableSection = document.getElementById("timetable-section");
     const communitySection = document.getElementById("community-section");
     const aboutSection = document.getElementById("about-section");
+    const jummuahSection = document.getElementById("jummuah-section"); // new
 
     // Nav items
     const navTimetable = document.getElementById("nav-timetable");
@@ -1056,11 +1182,16 @@
         timetableSection.style.display = "block";
         communitySection.style.display = "none";
         aboutSection.style.display = "none";
+        // Keep Jumuah visible at bottom (or hide if you prefer)
+        jummuahSection.style.display = "block";
+
         navTimetable.classList.add("active", "animate-pop");
       } else if (tab === "community") {
         timetableSection.style.display = "none";
         communitySection.style.display = "block";
         aboutSection.style.display = "none";
+        jummuahSection.style.display = "none";
+
         navCommunity.classList.add("active", "animate-pop");
 
         // Fade in community items
@@ -1077,6 +1208,8 @@
         timetableSection.style.display = "none";
         communitySection.style.display = "none";
         aboutSection.style.display = "block";
+        jummuahSection.style.display = "none";
+
         navAbout.classList.add("active", "animate-pop");
 
         // Fade in about items
