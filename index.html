@@ -40,7 +40,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* [Your CSS styles remain unchanged] */
+    /* All your original CSS styles go here – unchanged */
     :root {
       /* Core Colors */
       --primary-color: #007AFF;
@@ -125,7 +125,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    /* ... Remaining CSS styles for your sections, cards, nav, etc. ... */
+    /* ... Rest of your CSS (for date section, cards, nav, etc.) ... */
   </style>
 </head>
 <body>
@@ -238,7 +238,7 @@
   </div>
 
   <script>
-    // Utility functions
+    // Utility Functions
     function getTodayString() {
       const d = new Date();
       const dd = String(d.getDate()).padStart(2, "0");
@@ -270,14 +270,16 @@
       return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hh, mm, 0);
     }
 
-    // Global variable to hold the loaded prayer data
+    // Global variable for prayer data
     let prayerData = [];
 
-    // Load prayer data from the JSON file
+    // Fetch the prayer data from prayerData.json
     async function loadPrayerData() {
       try {
         const response = await fetch('prayerData.json');
-        if (!response.ok) throw new Error('Failed to load prayer data');
+        if (!response.ok) {
+          throw new Error('Failed to load prayer data');
+        }
         prayerData = await response.json();
         initializeDisplay();
       } catch (error) {
@@ -285,7 +287,7 @@
       }
     }
 
-    // Render prayer cards based on the selected day's data
+    // Render Prayer Cards
     function renderPrayers(selectedRow) {
       const cardsContainer = document.getElementById("prayer-cards");
       cardsContainer.innerHTML = "";
@@ -369,6 +371,7 @@
       });
     }
 
+    // Update Ramadan Counter
     function updateRamadanCounter(selectedRow) {
       const ramadanCounter = document.getElementById('ramadan-counter');
       if (!selectedRow) {
@@ -391,6 +394,7 @@
       }
     }
 
+    // Iftar/Suhoor Countdown
     let ramadanInterval = null;
     function startRamadanCountdowns(selectedRow) {
       if (ramadanInterval) clearInterval(ramadanInterval);
@@ -464,6 +468,7 @@
       ramadanInterval = setInterval(updateRamadanMessage, 1000);
     }
 
+    // Display Update and Navigation
     let currentPrayerIndex = 0;
     function updateDisplay(index) {
       const selectedRow = prayerData[index];
@@ -481,7 +486,6 @@
         iftarEl.textContent = "";
       }
     }
-
     function initializeDisplay() {
       currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
       if (currentPrayerIndex === -1) currentPrayerIndex = 0;
@@ -494,13 +498,13 @@
       });
     }
 
+    // Tab Navigation
     const timetableSection = document.getElementById("timetable-section");
     const communitySection = document.getElementById("community-section");
     const aboutSection = document.getElementById("about-section");
     const navTimetable = document.getElementById("nav-timetable");
     const navCommunity = document.getElementById("nav-community");
     const navAbout = document.getElementById("nav-about");
-
     function showTab(tab) {
       [navTimetable, navCommunity, navAbout].forEach(btn => btn.classList.remove("active", "animate-pop"));
       if (tab === "timetable") {
@@ -539,7 +543,7 @@
     navCommunity.addEventListener("click", () => showTab("community"));
     navAbout.addEventListener("click", () => showTab("about"));
 
-    // Start by loading prayer data
+    // Start by loading the prayer data from the JSON file
     loadPrayerData();
   </script>
 </body>
