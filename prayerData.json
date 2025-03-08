@@ -394,4 +394,43 @@
   {
     "date": "29/03/25",
     "fajr": "4:12 AM",
-    "fajrJama
+    "fajrJamaat": "4:32 AM",
+    "sunrise": "5:48 AM",
+    "dhuhr": "12:17 PM",
+    "dhuhrJamaat": "1:15 PM",
+    "asr": "4:36 PM",
+    "asrJamaat": "5:00 PM",
+    "maghrib": "6:36 PM",
+    "maghribJamaat": "6:36 PM",
+    "isha": "7:57 PM",
+    "ishaJamaat": "8:30 PM"
+  },
+  {
+    "date": "30/03/25",
+    "fajr": "5:10 AM",
+    "fajrJamaat": "5:30 AM",
+    "sunrise": "6:46 AM",
+    "dhuhr": "1:16 PM",
+    "dhuhrJamaat": "1:30 PM",
+    "asr": "5:39 PM",
+    "asrJamaat": "6:00 PM",
+    "maghrib": "7:38 PM",
+    "maghribJamaat": "7:38 PM",
+    "isha": "8:58 PM",
+    "ishaJamaat": "9:30 PM"
+  },
+  {
+    "date": "31/03/25",
+    "fajr": "5:08 AM",
+    "fajrJamaat": "5:18 AM",
+    "sunrise": "6:44 AM",
+    "dhuhr": "1:16 PM",
+    "dhuhrJamaat": "1:30 PM",
+    "asr": "5:40 PM",
+    "asrJamaat": "6:00 PM",
+    "maghrib": "7:40 PM",
+    "maghribJamaat": "7:40 PM",
+    "isha": "8:59 PM",
+    "ishaJamaat": "9:30 PM"
+  }
+]
