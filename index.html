@@ -36,7 +36,7 @@
   <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 
-  <!-- For iOS app mode -->
+  <!-- For iOS if you want “app mode” styling -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default" media="(prefers-color-scheme: light)">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" media="(prefers-color-scheme: dark)">
@@ -134,7 +134,7 @@
 
     /* 2) If Galaxy Z Fold is detected, add extra bottom padding */
     .z-fold-fix .container {
-      padding-bottom: 80px; /* Adjust as needed for more scroll space */
+      padding-bottom: 80px;
     }
 
     /* Header */
@@ -197,7 +197,6 @@
       margin-top: 8px;
       flex-wrap: wrap; /* so they stack on mobile if needed */
     }
-
     .ramadan-counter,
     .iftar-counter {
       background-color: var(--accent-color);
@@ -210,15 +209,11 @@
       align-items: center;
       min-height: 36px;
     }
-
-    /* Ramadan counter icon style */
     .ramadan-counter svg {
       margin-right: 6px;
       width: 16px;
       height: 16px;
     }
-
-    /* Iftar counter icon (Font Awesome utensils) */
     .iftar-counter i {
       margin-right: 6px;
     }
@@ -309,7 +304,7 @@
       margin-top: -2px;
       margin-bottom: 2px;
       text-align: center;
-      font-weight: 700;
+      font-weight: 700; 
     }
     .prayer-time-secondary {
       font-size: var(--time-font-size);
@@ -497,7 +492,7 @@
   </style>
 </head>
 <body>
-  <!-- Detect Galaxy Z Fold devices -->
+  <!-- Detect Galaxy Z Fold and also specific models 3, 4, 5 -->
   <script>
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     if (/SM-F9/i.test(userAgent) || /Galaxy Z Fold/i.test(userAgent)) {
@@ -569,8 +564,10 @@
         </div>
       </div>
       <div class="community-fade" style="text-align: center; margin-bottom: 20px;">
-        <a href="mailto:jalalabaddeveloper@gmail.com?subject=Community%20Message"
-           style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: #fff; padding: 10px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow);">
+        <a
+          href="mailto:jalalabaddeveloper@gmail.com?subject=Community%20Message"
+          style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: #fff; padding: 10px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow);"
+        >
           <span style="font-size: 20px; font-weight: bold; margin-right: 6px;">+</span>
           Submit a message
         </a>
@@ -641,6 +638,13 @@
       return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hh, mm, 0);
     }
 
+    // A small helper to get day difference in UTC, ignoring DST
+    function getDayDifferenceUTC(dateA, dateB) {
+      const utcA = Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
+      const utcB = Date.UTC(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
+      return Math.floor((utcA - utcB) / (1000 * 60 * 60 * 24));
+    }
+
     // Global variable for prayer data (to be loaded from external JSON)
     let prayerData = [];
 
@@ -685,7 +689,7 @@
         ];
       }
 
-      // Highlight current & next prayer if it's today
+      // Highlight current & next prayer if it's "today"
       if (isToday) {
         const now = new Date();
         const nowMins = now.getHours() * 60 + now.getMinutes();
@@ -731,28 +735,37 @@
           <i class="prayer-icon ${p.iconClass}" aria-hidden="true"></i>
           <div class="prayer-name">${p.name}</div>
           <div class="prayer-time">${p.startTime || ""}</div>
-          ${ p.jamatTime ? `<div class="jamat-label">Jamaat</div>
-                             <div class="prayer-time-secondary">${p.jamatTime}</div>` : "" }
+          ${
+            p.jamatTime
+              ? `<div class="jamat-label">Jamaat</div>
+                 <div class="prayer-time-secondary">${p.jamatTime}</div>`
+              : ""
+          }
         `;
         cardsContainer.appendChild(card);
         setTimeout(() => { card.classList.add("fade-in"); }, idx * 100);
       });
     }
 
-    // Ramadan Day counter
+    // Ramadan Day counter (using UTC to avoid DST issues)
     function updateRamadanCounter(selectedRow) {
       const ramadanCounter = document.getElementById('ramadan-counter');
       if (!selectedRow) {
         ramadanCounter.textContent = 'Ramadan has ended';
         return;
       }
-      const ramadanStart = new Date(2025, 2, 1); // March 1, 2025
+      // For demo: Ramadan start is 1st March 2025
+      const ramadanStart = new Date(2025, 2, 1); // 0-based month => March
+
+      // Convert the selected row's date to a Date object
       const [dd, mm, yy] = selectedRow.date.split("/");
       const fullYear = 2000 + parseInt(yy);
       const selectedDateObj = new Date(fullYear, parseInt(mm) - 1, parseInt(dd));
-      const diffTime = selectedDateObj - ramadanStart;
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      // Use our UTC-based difference function
+      const diffDays = getDayDifferenceUTC(selectedDateObj, ramadanStart);
       const ramadanDay = diffDays + 1;
+
       if (ramadanDay < 1) {
         ramadanCounter.textContent = 'Ramadan has not started yet';
       } else if (ramadanDay > 30) {
@@ -784,6 +797,7 @@
         tomorrowFajr = parsePrayerTime(tomorrowRow.fajr, dateObjTomorrow);
       }
       let fajrPlus5 = (fajrTime) ? new Date(fajrTime.getTime() + 5 * 60000) : null;
+
       function updateRamadanMessage() {
         const now = new Date();
         if (fajrTime && now < fajrTime) {
@@ -816,12 +830,14 @@
         }
         iftarEl.textContent = "";
       }
+
       function midnightOfNextDay(baseDate) {
         const next = new Date(baseDate.getTime());
         next.setDate(next.getDate() + 1);
         next.setHours(0, 0, 0, 0);
         return next;
       }
+
       function formatCountdown(ms, suffix) {
         let secs = Math.floor(ms / 1000);
         let mins = Math.floor(secs / 60);
@@ -836,13 +852,13 @@
           return `${secs}s ${suffix}`;
         }
       }
+
       updateRamadanMessage();
       ramadanInterval = setInterval(updateRamadanMessage, 1000);
     }
 
     // Update display for the selected day's data
-    let currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
-    if (currentPrayerIndex === -1) currentPrayerIndex = 0;
+    let currentPrayerIndex = 0;
     function updateDisplay(index) {
       const selectedRow = prayerData[index];
       document.getElementById('current-date').textContent = formatDisplayDate(selectedRow.date);
@@ -860,16 +876,24 @@
       }
     }
 
-    // After loading prayer data, initialize display and event listeners
     function initializeDisplay() {
+      // Find today's date in the loaded data
       currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
       if (currentPrayerIndex === -1) currentPrayerIndex = 0;
       updateDisplay(currentPrayerIndex);
+
+      // Prev/Next date
       document.getElementById('prev-date').addEventListener('click', () => {
-        if (currentPrayerIndex > 0) { currentPrayerIndex--; updateDisplay(currentPrayerIndex); }
+        if (currentPrayerIndex > 0) {
+          currentPrayerIndex--;
+          updateDisplay(currentPrayerIndex);
+        }
       });
       document.getElementById('next-date').addEventListener('click', () => {
-        if (currentPrayerIndex < prayerData.length - 1) { currentPrayerIndex++; updateDisplay(currentPrayerIndex); }
+        if (currentPrayerIndex < prayerData.length - 1) {
+          currentPrayerIndex++;
+          updateDisplay(currentPrayerIndex);
+        }
       });
     }
 
@@ -880,6 +904,7 @@
     const navTimetable = document.getElementById("nav-timetable");
     const navCommunity = document.getElementById("nav-community");
     const navAbout = document.getElementById("nav-about");
+
     function showTab(tab) {
       [navTimetable, navCommunity, navAbout].forEach(btn => btn.classList.remove("active", "animate-pop"));
       if (tab === "timetable") {
@@ -918,7 +943,7 @@
     navCommunity.addEventListener("click", () => showTab("community"));
     navAbout.addEventListener("click", () => showTab("about"));
 
-    // Start by loading the prayer data from prayerData.json
+    // Finally, load prayer data and start the app
     loadPrayerData();
   </script>
 </body>
