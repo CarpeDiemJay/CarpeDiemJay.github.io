@@ -40,9 +40,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* All your original CSS styles go here – unchanged */
+    /* --- Your CSS remains unchanged --- */
     :root {
-      /* Core Colors */
       --primary-color: #007AFF;
       --accent-color: #5E5CE6;
       --bg-color: #F5F5F7;
@@ -50,12 +49,8 @@
       --text-color: #1C1C1E;
       --secondary-text: #6E6E73;
       --border-color: rgba(0, 0, 0, 0.06);
-
-      /* Layout & Effects */
       --border-radius: 16px;
       --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-
-      /* Typography */
       --title-font-size: 34px;
       --title-weight: 700;
       --time-font-size: 26px;
@@ -125,7 +120,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    /* ... Rest of your CSS (for date section, cards, nav, etc.) ... */
+    /* ... Rest of your CSS for date section, cards, nav, etc. ... */
   </style>
 </head>
 <body>
@@ -201,7 +196,8 @@
         </div>
       </div>
       <div class="community-fade" style="text-align: center; margin-bottom: 20px;">
-        <a href="mailto:jalalabaddeveloper@gmail.com?subject=Community%20Message" style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: #fff; padding: 10px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow);">
+        <a href="mailto:jalalabaddeveloper@gmail.com?subject=Community%20Message"
+           style="display: inline-flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: #fff; padding: 10px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow);">
           <span style="font-size: 20px; font-weight: bold; margin-right: 6px;">+</span>
           Submit a message
         </a>
@@ -214,7 +210,9 @@
         <div class="community-card">
           <div class="announcement-badge">Disclaimer</div>
           <p style="margin-top: 6px;">
-            This is a community project website built for personal use. It is not formally affiliated with or approved by the masjid committee.
+            This is a community project <strong>website</strong> built for personal use. It is 
+            not formally affiliated with or approved by the masjid committee. <br><br>
+            If you find it useful, great! If you have any issues, please contact us.
           </p>
         </div>
       </div>
@@ -238,7 +236,7 @@
   </div>
 
   <script>
-    // Utility Functions
+    // Utility functions
     function getTodayString() {
       const d = new Date();
       const dd = String(d.getDate()).padStart(2, "0");
@@ -270,10 +268,10 @@
       return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hh, mm, 0);
     }
 
-    // Global variable for prayer data
+    // Global variable for prayer data (will be loaded from external JSON)
     let prayerData = [];
 
-    // Fetch the prayer data from prayerData.json
+    // Load prayer data from prayerData.json
     async function loadPrayerData() {
       try {
         const response = await fetch('prayerData.json');
@@ -287,7 +285,7 @@
       }
     }
 
-    // Render Prayer Cards
+    // Render the prayer cards
     function renderPrayers(selectedRow) {
       const cardsContainer = document.getElementById("prayer-cards");
       cardsContainer.innerHTML = "";
@@ -314,6 +312,7 @@
         ];
       }
 
+      // Highlight current & next prayer if it's today
       if (isToday) {
         const now = new Date();
         const nowMins = now.getHours() * 60 + now.getMinutes();
@@ -359,26 +358,22 @@
           <i class="prayer-icon ${p.iconClass}" aria-hidden="true"></i>
           <div class="prayer-name">${p.name}</div>
           <div class="prayer-time">${p.startTime || ""}</div>
-          ${
-            p.jamatTime
-              ? `<div class="jamat-label">Jamaat</div>
-                 <div class="prayer-time-secondary">${p.jamatTime}</div>`
-              : ""
-          }
+          ${ p.jamatTime ? `<div class="jamat-label">Jamaat</div>
+                             <div class="prayer-time-secondary">${p.jamatTime}</div>` : "" }
         `;
         cardsContainer.appendChild(card);
         setTimeout(() => { card.classList.add("fade-in"); }, idx * 100);
       });
     }
 
-    // Update Ramadan Counter
+    // Ramadan Day counter
     function updateRamadanCounter(selectedRow) {
       const ramadanCounter = document.getElementById('ramadan-counter');
       if (!selectedRow) {
         ramadanCounter.textContent = 'Ramadan has ended';
         return;
       }
-      const ramadanStart = new Date(2025, 2, 1);
+      const ramadanStart = new Date(2025, 2, 1); // March 1, 2025
       const [dd, mm, yy] = selectedRow.date.split("/");
       const fullYear = 2000 + parseInt(yy);
       const selectedDateObj = new Date(fullYear, parseInt(mm) - 1, parseInt(dd));
@@ -394,7 +389,7 @@
       }
     }
 
-    // Iftar/Suhoor Countdown
+    // Iftar / Suhoor countdown
     let ramadanInterval = null;
     function startRamadanCountdowns(selectedRow) {
       if (ramadanInterval) clearInterval(ramadanInterval);
@@ -460,15 +455,19 @@
         let hrs = Math.floor(mins / 60);
         secs %= 60;
         mins %= 60;
-        if (hrs > 0) return `${hrs}h ${mins}m ${suffix}`;
-        else if (mins > 0) return `${mins}m ${suffix}`;
-        else return `${secs}s ${suffix}`;
+        if (hrs > 0) {
+          return `${hrs}h ${mins}m ${suffix}`;
+        } else if (mins > 0) {
+          return `${mins}m ${suffix}`;
+        } else {
+          return `${secs}s ${suffix}`;
+        }
       }
       updateRamadanMessage();
       ramadanInterval = setInterval(updateRamadanMessage, 1000);
     }
 
-    // Display Update and Navigation
+    // Update display for the selected day's data
     let currentPrayerIndex = 0;
     function updateDisplay(index) {
       const selectedRow = prayerData[index];
@@ -486,6 +485,8 @@
         iftarEl.textContent = "";
       }
     }
+
+    // After loading prayer data, initialize display and event listeners
     function initializeDisplay() {
       currentPrayerIndex = prayerData.findIndex(row => row.date === getTodayString());
       if (currentPrayerIndex === -1) currentPrayerIndex = 0;
@@ -498,7 +499,7 @@
       });
     }
 
-    // Tab Navigation
+    // Tab navigation
     const timetableSection = document.getElementById("timetable-section");
     const communitySection = document.getElementById("community-section");
     const aboutSection = document.getElementById("about-section");
@@ -543,7 +544,7 @@
     navCommunity.addEventListener("click", () => showTab("community"));
     navAbout.addEventListener("click", () => showTab("about"));
 
-    // Start by loading the prayer data from the JSON file
+    // Start by loading the prayer data from prayerData.json
     loadPrayerData();
   </script>
 </body>
